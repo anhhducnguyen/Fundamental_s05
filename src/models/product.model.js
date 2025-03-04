@@ -23,7 +23,7 @@ class Product {
             return commentMap;
         } catch (error) {
             console.error("Error in getCommentsByProductIds:", error);
-            return {};
+            throw error;
         }
     }
     
@@ -49,7 +49,7 @@ class Product {
             return tagMap;
         } catch (error) {
             console.error("Error in getTagsByProductIds:", error);
-            return {};
+            throw error;
         }
     }
     
@@ -104,7 +104,7 @@ class Product {
             }));
         } catch (error) {
             console.error("Error in getAll:", error);
-            return { message: 'Error while getting products', error };
+            throw error;
         }
     }
     
@@ -142,7 +142,7 @@ class Product {
             };
         } catch (error) {
             console.error("Error in getById:", error);
-            return { message: 'Error while getting product', error };
+            throw error;
         }
     }
 
@@ -153,7 +153,7 @@ class Product {
                 .where('c.product_id', productId);
         } catch (error) {
             console.error("Error in getComments:", error);
-            return { message: 'Error while getting comments', error };
+            throw error;
         }
     }
 
@@ -165,61 +165,101 @@ class Product {
                 .where('pt.product_id', productId);
         } catch (error) {
             console.error("Error in getTags:", error);
-            return { message: 'Error while getting tags', error };
+            throw error;
         }
     }
     
     static async findByName(productName) {
-        return await db('products')
-        .where('productName', productName)
-        .first();
+        try {
+            return await db('products')
+            .where('productName', productName)
+            .first();
+        } catch (error) {
+            console.log('Error while finding product', error);
+            throw error;            
+        }
     } 
 
     static async createProduct({ productName, status }) {
-        const [id] = await db('products').insert({ productName, status }).returning('id');
-        return { id, productName, status };
+        try {
+            const [id] = await db('products').insert({ productName, status }).returning('id');
+            return { id, productName, status };
+        } catch (error) {
+            console.log('Error inserting product', error);
+            throw error;            
+        }
     }
 
     static async createListing(productId, listing) {
-        return await db('listings').insert({
-            product_id: productId,
-            description: listing.description,
-            price: listing.price,
-            rate: listing.rate
-        });
+        try {
+            return await db('listings').insert({
+                product_id: productId,
+                description: listing.description,
+                price: listing.price,
+                rate: listing.rate
+            });
+        } catch (error) {
+            console.log('Error inserting listings', error);
+            throw error;
+        }
     }
 
     static async addComment(productId, content) {
-        return await db('comments').insert({
-            product_id: productId,
-            content
-        });
+        try {
+            return await db('comments').insert({
+                product_id: productId,
+                content
+            });
+        } catch (error) {
+            console.log('Error inserting comments', error);
+            throw error;
+        }
     }
 
     static async findById(id) {
-        return await db('products')
-        .where('id', id)
-        .first();
+        try {
+            return await db('products')
+            .where('id', id)
+            .first();
+        } catch (error) {
+            console.log('Error finding product', error);
+            throw error;
+        }
     }
 
     static async createComment(id, content) {
-        return await db('comments').insert({
-            product_id: id,
-            content
-        });
+        try {
+            return await db('comments').insert({
+                product_id: id,
+                content
+            });
+        } catch (error) {
+            console.log('Error inserting comment', error);
+            throw error;
+        }
     }
 
     static async updateProduct(id, { productName, status }) {
-        return await db('products')
-       .where('id', id)
-       .update({ productName, status });
+        try {
+            return await db('products')
+            .where('id', id)
+            .update({ productName, status });
+        } catch (error) {
+            console.log('Error updating product', error);
+            throw error;
+        }
     }
 
     static async deleteProduct(id) {
-        await db('listings').where('product_id', id).delete();
-        await db('comments').where('product_id', id).delete();
-        await db('product_tags').where('product_id', id).delete();
-        return await db('products').where('id', id).delete();
+        try {
+            await db('listings').where('product_id', id).delete();
+            await db('comments').where('product_id', id).delete();
+            await db('product_tags').where('product_id', id).delete();
+            return await db('products').where('id', id).delete();
+        } catch (error) {
+            console.log('Error while deleting product', error);
+            throw error;            
+        }
     }
 }
 

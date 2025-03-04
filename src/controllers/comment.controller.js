@@ -30,13 +30,13 @@ exports.createComment = async (req, res) => {
         const { content } = req.body;
         const productId = req.params.id;
 
-        const exitsingProduct = await Product.findById(productId);
+        const existingProduct = await Product.findById(productId);
 
-        if (!exitsingProduct) {
+        if (!existingProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        Comment.createComment(productId, content);
+        await Comment.createComment(productId, content);
 
         res.status(201).json({ 
             message: 'Create successfully' 
@@ -52,13 +52,13 @@ exports.updateComment = async (req, res) => {
         const id = req.params.id;
         const { content } = req.body;
 
-        const exitstingComment = await Comment.findById(id);
+        const existingComment = await Comment.findById(id);
 
-        if (!exitstingComment) {
+        if (!existingComment) {
             return res.status(404).json({ message: 'Comment not found' });
         }
 
-        Comment.updateComment(id, content);
+        await Comment.updateComment(id, content);
 
         res.json({ message: 'Update successfully' });
     } catch (error) {
@@ -77,11 +77,11 @@ exports.deleteComment = async (req, res) => {
             return res.status(404).json({ message: 'Comment not found' });
         }
         
-        Comment.deleteComment(id);
+        await Comment.deleteComment(id);
 
         res.json({ message: 'Delete successfully' });
     } catch (error) {
-        console.log('Rrror deleting comment', error);
+        console.log('Error deleting comment', error);
         res.status(404).json({ message: 'Error deleting comment', error });  
     }    
 }

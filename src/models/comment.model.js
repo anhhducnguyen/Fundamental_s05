@@ -11,6 +11,7 @@ class Comment {
             });
         } catch (error) {
             console.error("Error inserting comment", error);
+            throw error;
         }
     }
 
@@ -21,6 +22,7 @@ class Comment {
             .first();
         } catch (error) {
             console.log('Error while finding comment', error); 
+            throw error;
         }
     }
 
@@ -33,6 +35,7 @@ class Comment {
             });
         } catch (error) {
             console.error("Error updating comment", error);
+            throw error;
         }
     }
 
@@ -43,6 +46,7 @@ class Comment {
             .delete();
         } catch (error) {
             console.error("Error deleting comment", error);
+            throw error;
         }
     }
 
@@ -53,6 +57,7 @@ class Comment {
             .first();
         } catch (error) {
             console.log('Error while finding comment', error);
+            throw error;
         }
     }
 }
