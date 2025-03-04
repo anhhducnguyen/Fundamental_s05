@@ -52,6 +52,24 @@ npx knex migrate:latest
 npx knex seed:run
 ```
 
+
+```
+-- Hợp lệ:
+
+?minRate=2&maxRate=4&page=1&limit=10&sort=productName&order=asc
+
+--Không hợp lệ
+
+?minRate=5&maxRate=2
+
+?page=-1&limit=10
+
+?sort=unknownField&order=asc
+
+?sort=productName
+```
+
+
 ```
 
 // get_all: http://localhost:3000/api/v1/products/?minRate=2&maxRate=4&sort=id&order=asc?page=1&limit=1

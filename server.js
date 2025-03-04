@@ -2,10 +2,10 @@ const express = require('express')
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const userRoutes = require('../src/routes/user.routes');
-const productRoutes = require('../src/routes/product.routes');
-const commentRoutes = require('../src/routes/comment.routes');
-const tagRoutes = require('../src/routes/tag.routes');
+const userRoutes = require('./src/routes/user.routes');
+const productRoutes = require('./src/routes/product.routes');
+const commentRoutes = require('./src/routes/comment.routes');
+const tagRoutes = require('./src/routes/tag.routes');
 
 const app = express()
 const port = 3000
