@@ -1,4 +1,22 @@
 const Product = require('../models/product.model');
+const ProductService = require('../services/product.services');
+
+module.exports.mergeProductAndListing = async (req, res) => {
+    try {
+        let products = await ProductService.getAllProducts();
+        res.json({
+            message: "GET ALL USERS SUCCESSFULLY",
+            "data": products,
+        });
+    } catch (error) {
+        res.json({
+            message: "Error occurred on server",
+            error,
+        });
+    }
+}
+
+
 
 exports.getAllProduct = async (req, res) => {
     try {
