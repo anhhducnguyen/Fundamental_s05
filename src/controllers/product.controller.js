@@ -107,7 +107,7 @@ exports.createProduct = async (req, res) => {
 exports.createComment = async (req, res) => {
     try {
         const { content } = req.body;
-        let id = req.params.id;
+        const id = req.params.id;
 
         const existsProduct = await Product.findById(id);
 
@@ -129,7 +129,7 @@ exports.createComment = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
     try {
-        let id = req.params.id;
+        const id = req.params.id;
         console.log(id);
         
         const { productName, status } = req.body;
@@ -153,7 +153,7 @@ exports.updateProduct = async (req, res) => {
 
 exports.deleteProduct = (req, res) => {
     try {
-        let id = req.params.id;
+        const id = req.params.id;
     
         Product.deleteProduct(id);
         

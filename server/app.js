@@ -1,8 +1,10 @@
 const express = require('express')
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+
 const userRoutes = require('../src/routes/user.routes');
 const productRoutes = require('../src/routes/product.routes');
+const commentRoutes = require('../src/routes/comment.routes');
 
 const app = express()
 const port = 3000
@@ -12,6 +14,7 @@ app.use(bodyParser.json());
 
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productRoutes);
+app.use('/api/v1/comments', commentRoutes);
 
 app.get('/', (req, res) => {
     res.json({
